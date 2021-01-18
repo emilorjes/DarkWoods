@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DarkWoods.Game;
+using System;
 
 namespace DarkWoods
 {
@@ -6,7 +7,7 @@ namespace DarkWoods
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            GameLogic.NewGame();
         }
     }
 }
