@@ -14,7 +14,11 @@ namespace DarkWoods.Game
         //===================================================================================================================================================================================
         // GameLogic
         //===================================================================================================================================================================================
+        public static List<Monster.Monster> listOfMOnsters = new List<Monster.Monster>() 
+        {Creekjumper.creekjumper, Deathrunner.deathrunner, Earthcrawler.earthcrawler, Swampdemon.swampdemon, Treedropper.treedropper};
         public static List<Player.Player> playerList = new List<Player.Player> { Player.Player.player };
+        public static Random rand = new Random();
+
         public static void NewGame()
         {
             GameLogic.GameIntro();
@@ -45,7 +49,7 @@ namespace DarkWoods.Game
                 switch (menuChoiceString)
                 {
                     case "1":
-
+                        EnterDarkwoods();
                         break;
                     case "2":
                         Player.Player.PrintPlayerInfo(playerList[0]);
@@ -66,9 +70,107 @@ namespace DarkWoods.Game
 
             } while (keepMenuGo);
         }
+        private static void EnterDarkwoods()
+        {
+
+            bool keepMenuGo = true;
+            string menuChoiceString;
+            Console.WriteLine($"You have entered the Darkwoods {Player.Player.player.PlayerName}............... Stay safe my friend..... \n");
 
 
 
+            do
+            {
+                Console.WriteLine($"1.  Explore the Darkwoods");
+                Console.WriteLine($"2.  Leave the Darkwoods \n");
+                Console.Write("Your choice: ");
+                menuChoiceString = Console.ReadLine();
+
+                ErrorHandling.TwoChoiceMenuHandling(menuChoiceString);
+
+                Console.Clear();
+
+                switch (menuChoiceString)
+                {
+                    case "1":
+                        ExploreDarkwoods();
+                        break;
+                    case "2":
+                        keepMenuGo = false;
+                        break;
+                }
+
+                Console.Clear();
+
+            } while (keepMenuGo);
+        }
+
+        private static void ExploreDarkwoods()
+        {
+
+
+            int randomMonster = rand.Next(listOfMOnsters.Count);
+            MonsterAppear(listOfMOnsters[randomMonster]);
+            bool keepMenuGo = true;
+            string menuChoiceString;
+
+           
+
+
+
+            do
+            {
+                
+                Console.WriteLine($"1.  Attack!");
+                Console.WriteLine($"2.  Flee...... \n");
+                Console.Write("Your choice: ");
+                menuChoiceString = Console.ReadLine();
+
+                ErrorHandling.TwoChoiceMenuHandling(menuChoiceString);
+
+                Console.Clear();
+
+                switch (menuChoiceString)
+                {
+                    case "1":
+                        AttackMonster(listOfMOnsters[randomMonster]);
+                        break;
+                    case "2":
+                        keepMenuGo = false;
+                        PlayerMOnsterFUllHp(listOfMOnsters[randomMonster]);
+                       break;
+                    
+                }
+
+                Console.Clear();
+
+            } while (keepMenuGo);
+        }
+
+        private static void MonsterAppear(Monster.Monster monster)
+        {
+
+            Console.WriteLine($"Watch out! An ancient {monster.MonsterName} level {monster.MonsterLevel} is blocking your way\n");
+        }
+        private static void AttackMonster(Monster.Monster monster)
+        {
+            int randomPlayerDmg = rand.Next(1, 50);
+            Player.Player.player.PlayerDmg = randomPlayerDmg;
+            int randomMonsterDmg = rand.Next(1, 25);
+            monster.MonsterAtkDmg = randomMonsterDmg;
+            Console.WriteLine($"You attack the {monster.MonsterName} with your {Player.Player.player.PlayerWepon} and deal {Player.Player.player.PlayerDmg} damage.");
+            monster.MonsterHp = monster.MonsterHp - Player.Player.player.PlayerDmg;
+            Console.WriteLine($"The {monster.MonsterName} life is {monster.MonsterHp} / {monster.MonsterMaxHp}.\n");
+            Console.WriteLine($"The {monster.MonsterName} attack you with {monster.MonsterAtkName} and deal {monster.MonsterAtkDmg}.");
+            Player.Player.player.PlayerHp = Player.Player.player.PlayerHp - monster.MonsterAtkDmg;
+            Console.WriteLine($"Your life is {Player.Player.player.PlayerHp} / 100 ");
+            Console.ReadLine();
+        }
+        private static void PlayerMOnsterFUllHp(Monster.Monster monster)
+        {
+            Player.Player.player.PlayerHp = 100;
+            monster.MonsterHp = monster.MonsterMaxHp;
+        }
 
         private static void GameLogo()
         {

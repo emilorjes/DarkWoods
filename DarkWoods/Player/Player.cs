@@ -14,6 +14,7 @@ namespace DarkWoods.Player
         private int playerGold;
         private int playerStrenght;
         private int toughness;
+        private int playerDmg;
 
         public string PlayerName
         {
@@ -55,13 +56,18 @@ namespace DarkWoods.Player
             get { return toughness; }
             set { toughness = value; }
         }
+        public int PlayerDmg
+        {
+            get { return playerDmg; }
+            set { playerDmg = value; }
+        }
 
 
         public Player()
         {
 
         }
-        public Player(string playerName, int playerLevel, int playerExp, int playerHp, string playerWepon, int playerGold, int playerStrength, int playerToughness)
+        public Player(string playerName, int playerLevel, int playerExp, int playerHp, string playerWepon, int playerGold, int playerStrength, int playerToughness, int playerDmg)
         {
             this.PlayerName = playerName;
             this.PlayerLevel = playerLevel;
@@ -72,7 +78,7 @@ namespace DarkWoods.Player
             this.PlayerStrenght = playerStrength;
             this.PlayerToughness = playerToughness;
         }
-        public static Player player = new Player(" ", 1, default, 100, " ", default, default, default);
+        public static Player player = new Player(" ", 1, default, 100, " ", default, default, default,default);
 
         public static void PrintPlayerInfo(Player player)
         {
